@@ -6,8 +6,11 @@ const HookForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
-    } = useForm();
+        formState: { isDirty, isValid, errors },
+    } = useForm({
+        defaultValues: { email: '', password: '' },
+        criteriaMode: 'all',
+    });
 
     const onSubmit = (data) => console.log(data);
 
@@ -45,8 +48,12 @@ const HookForm = () => {
                         type='password'
                     />
                 </div>
-                <button type='submit'>Submit</button>
+                <button type='submit' disabled={!isDirty}>Submit</button>
             </form>
+            <div>
+                {/* <p>{getValues('email')}</p> */}
+                {/* <p>{watch('email')}</p> */}
+            </div>
         </div>
     )
 }
