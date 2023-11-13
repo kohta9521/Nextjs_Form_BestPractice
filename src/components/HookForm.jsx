@@ -1,61 +1,45 @@
 'use client'
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+
+const schema = z.object({
+    email: z
+        .string()
+        .email({ message: 'メールアドレスの形式ではありません。'})
+        .min(1, { message: '1文字以上入力する必要があります。'}),
+    password: z.string().min(1, { message: '１文字以上入力する必要があります。'}),
+})
 
 const HookForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { isDirty, isValid, errors },
+        formState: { errors },
     } = useForm({
-        defaultValues: { email: '', password: '' },
-        criteriaMode: 'all',
+        resolver: zodResolver(schema),
     });
 
     const onSubmit = (data) => console.log(data);
 
     return (
-        <div>
-            <h1>Hook Form Login!</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input
-                        id='email'
-                        {...register('email', {
-                            required: {
-                                value: true,
-                                message: 'Email is required',
-                            },
-                        })}
-                    />
-                    {errors.email?.message && <div>{errors.email?.message}</div>}
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input
-                        id='password'
-                        {...register('password', {
-                            required: {
-                                value: true,
-                                message: 'Password is required',
-                            },
-                            minLength: {
-                                value: 8,
-                                message: 'Password must be at least 8 characters',
-                            },
-                        })}
-                        type='password'
-                    />
-                </div>
-                <button type='submit' disabled={!isDirty}>Submit</button>
-            </form>
+        <div className="App">
+          <h1>ログイン</h1>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                {/* <p>{getValues('email')}</p> */}
-                {/* <p>{watch('email')}</p> */}
+              <label htmlFor="email">Email</label>
+              <input id="email" {...register('email', { required: true })} />
+              <p>{errors.email?.message}</p>
             </div>
+            <div>
+              <label htmlFor="password">Password</label>
+              <input id="password" {...register('password')} type="password" />
+              <p>{errors.password?.message}</p>
+            </div>
+            <button type="submit">ログイン</button>
+          </form>
         </div>
-    )
+      );
 }
 
 
