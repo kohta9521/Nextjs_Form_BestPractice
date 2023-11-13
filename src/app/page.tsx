@@ -2,6 +2,7 @@ import styles from './page.module.css'
 
 import UseStateForm from '../components/UseStateForm'
 import UseRefForm from '../components/UseRefForm'
+import HookForm from '../components/HookForm'
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <h1>React Form Best Practice</h1>
       <UseStateForm />
       <UseRefForm />
+      <HookForm />
     </main>
   )
 }
