@@ -17,12 +17,33 @@ const HookForm = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label htmlFor="email">Email</label>
-                    <input id='email' {...register('email', { required: '入力が必須の項目です' })} />
+                    <input
+                        id='email'
+                        {...register('email', {
+                            required: {
+                                value: true,
+                                message: 'Email is required',
+                            },
+                        })}
+                    />
                     {errors.email?.message && <div>{errors.email?.message}</div>}
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>
-                    <input id='password' {...register('password')} type='password' />
+                    <input
+                        id='password'
+                        {...register('password', {
+                            required: {
+                                value: true,
+                                message: 'Password is required',
+                            },
+                            minLength: {
+                                value: 8,
+                                message: 'Password must be at least 8 characters',
+                            },
+                        })}
+                        type='password'
+                    />
                 </div>
                 <button type='submit'>Submit</button>
             </form>
