@@ -12,14 +12,18 @@ const UseStateForm = () => {
             email,
             password,
         });
+        setEmail('')
+        setPassword('')
     };
 
     const handleChangeEmail = (e) => {
         setEmail(e.target.value)
+        console.log('now email is moving')
     }
 
     const handleChangePassword = (e) => {
         setPassword(e.target.value)
+        console.log('now password is moving')
     }
 
 
